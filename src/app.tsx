@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1> React tsx from webpack! </h1>
+        <h1> React tsx ewe from webpack! </h1>
       </div>
     );
   }
