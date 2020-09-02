@@ -1,0 +1,28 @@
+{
+  "name": "react-demo",
+  "version": "1.0.0",
+  "description": "react typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack":"webpack --config config/webpack.config.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytmjatai/react-demo.git"
+  },
+  "keywords": [
+    "react",
+    "typescript"
+  ],
+  "author": "jatai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ytmjatai/react-demo/issues"
+  },
+  "homepage": "https://github.com/ytmjatai/react-demo#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
