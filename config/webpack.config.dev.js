@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
@@ -30,19 +31,22 @@ module.exports = {
     ]
   },
   devServer: {
-    // contentBase: path.join(__dirname, 'dist'),
-    port: 3001,
-    // publicPath: "http://localhost:3000/dist/",
-    // hotOnly: true,
-    // open: true,
+    port: 3000,
+    open: true,
     hot: true,
-    // index: 'index.html'
+    index: 'index.html'
   },
   watch: true,
   watchOptions: {
     ignored: path.resolve('node_modules/'),
     aggregateTimeout: 500,
     poll: 1000
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'React jatai',
+      template: 'index.html'
+    })
+  ],
 
 }
