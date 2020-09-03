@@ -33,7 +33,8 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
-    index: 'index.html'
+    historyApiFallback: true,
+    index: 'index.html' 
   },
   watch: true,
   watchOptions: {
