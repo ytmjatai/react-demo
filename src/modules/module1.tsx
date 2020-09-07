@@ -5,7 +5,7 @@ class Module1 extends React.Component {
 
   render() {
     return (
-      <p>Module31</p>
+      <p>module1</p>
     );
   }
 }

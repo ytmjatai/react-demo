@@ -47,10 +47,10 @@ export default class Aside extends React.Component {
           inlineIndent={12}
         >
           <Menu.Item key="1" icon={<UserOutlined />}>
-            <Link to="/module1">Module1</Link>
+            <Link to="/home/module1">Module1</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<DesktopOutlined />}>
-            <Link to="/module2">Module2</Link>
+            <Link to="/home/module2">Module2</Link>
           </Menu.Item>
         </Menu>
       </Layout.Sider>
