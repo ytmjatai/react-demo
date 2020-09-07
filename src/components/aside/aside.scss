@@ -1,0 +1,17 @@
+.ant-menu-inline-collapsed {
+  width: 40px;
+}
+
+.ant-menu-item,
+.ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+.ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title,
+.ant-menu-submenu > .ant-menu-submenu-title {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-left: 12px !important;
+  padding-right: 0 !important;
+  transition: ease-in;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  border-right: 2px solid;
+}

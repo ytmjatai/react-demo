@@ -6,7 +6,6 @@ import RxEventService from '../../services/rx-event.service';
 
 class Header extends React.Component {
 
-
   toggleAside = () => {
     const rxSvc = RxEventService.getInstance();
     rxSvc.publish('toggle-aside', null);
@@ -15,7 +14,7 @@ class Header extends React.Component {
     return (
       <div className="d-flex align-items-center p-2 border-bottom bg-white">
         <Button icon={<MenuOutlined />} onClick={this.toggleAside} />
-        <h1 className="mb-0 ml-3">Jatai</h1>
+        <h1 className="mb-0 ml-3">React Demo</h1>
       </div>
     );
   }

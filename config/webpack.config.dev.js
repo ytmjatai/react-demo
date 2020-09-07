@@ -44,7 +44,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React jatai',
       template: 'index.html'
     })
   ],

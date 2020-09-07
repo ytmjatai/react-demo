@@ -1,81 +1,26 @@
 
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Switch,
-  Redirect,
-  useLocation
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Layout } from 'antd';
 
+import Header from './components/header/header';
+import Aside from './components/aside/aside';
+import Module1 from './modules/module1';
+import Module2 from './modules/module2';
 
 import './app.scss';
 
-import { Layout, Menu } from 'antd';
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-  MenuOutlined,
-} from '@ant-design/icons';
-import Module1 from './modules/module1';
-import Module2 from './modules/module2';
-import Header from './components/header/header';
-import RxEventService from './services/rx-event.service';
-
-const { Content, Sider } = Layout;
-
-
-
 class App extends React.Component {
-  state = {
-    collapsed: false,
-  };
-
-  onCollapse = collapsed => {
-    console.log('tttt')
-    this.setState({ collapsed });
-  };
-
-  componentDidMount() {
-    const rxSvc = RxEventService.getInstance();
-    rxSvc.on('toggle-aside').subscribe(
-      _ => this.setState({ collapsed: !this.state.collapsed })
-
-    );
-  }
 
   render() {
     return (
       <Router>
-
-
         <Layout style={{ minHeight: '100vh' }}>
           <Header />
           <Layout>
-            <Sider collapsible theme="light" collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth="40" trigger={null}>
-
-              <Menu className="border-right-0" theme="light" defaultSelectedKeys={['1']} mode="inline" inlineIndent={12}>
-                <Menu.Item key="1" icon={<PieChartOutlined />}>
-                  <Link to="/module1">Module1</Link>
-                </Menu.Item>
-                <Menu.Item key="2" icon={<DesktopOutlined />}>
-                  <Link to="/module2">Module2</Link>
-                </Menu.Item>
-                <Menu.Item key="sub1" icon={<UserOutlined />}>
-                  User
-            </Menu.Item>
-                <Menu.Item key="sub2" icon={<TeamOutlined />}>
-                  Team
-            </Menu.Item>
-              </Menu>
-            </Sider>
-
-
+            <Aside />
             <Layout className="border-left">
-              <Content className="p-2 bg-white">
+              <Layout.Content className="p-2 bg-white">
                 <Switch>
                   <Route exact path="/module1">
                     <Module1 />
@@ -84,12 +29,10 @@ class App extends React.Component {
                     <Module2 />
                   </Route>
                 </Switch>
-              </Content>
+              </Layout.Content>
             </Layout>
-
           </Layout>
         </Layout>
-
       </Router>
 
     );

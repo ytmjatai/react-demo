@@ -9,7 +9,7 @@ module.exports = {
     path: path.resolve('dist'),
     filename: 'bundle.js'
   },
-  resolve: { extensions: ['*', '.js', '.jsx', '.tx', '.tsx'] },
+  resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
   module: {
     rules: [
       {
@@ -31,7 +31,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'React jatai',
       template: 'index.html'
     })
   ],
