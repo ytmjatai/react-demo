@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import loadable from '@loadable/component'
 
 import './app.scss';
@@ -14,11 +14,11 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
+          <Redirect exact path="/" to="/login" />
           <Route path="/login" component={Login} />
-          <Route path="/home" component={Home} />
+          <Route  path="/home" component={Home} />
         </Switch>
       </Router>
-
     );
   }
 }

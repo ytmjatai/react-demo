@@ -6,6 +6,8 @@ import loadable from '@loadable/component'
 
 import Header from '../header/header';
 import Aside from '../aside/aside';
+// const Header = loadable(() => import('../header/header'));
+// const Aside = loadable(() => import('../aside/aside'));
 
 const Module1 = loadable(() => import('../../modules/module1'));
 const Module2 = loadable(() => import('../../modules/module2'));
