@@ -2,12 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 
-import RxEventService from '../../services/rx-event.service';
+import rxSvc from '../../services/rx-event.service';
 
 class Header extends React.Component {
 
   toggleAside = () => {
-    const rxSvc = RxEventService.getInstance();
     rxSvc.publish('toggle-aside', null);
   }
   render() {

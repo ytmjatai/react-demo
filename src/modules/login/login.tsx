@@ -7,58 +7,36 @@ import './login.scss';
 
 
 class Login extends React.Component {
-
-  state = {
-    checked: true
-  }
-  onFinish = (values) => {
+  onLogin = (values) => {
     console.log('Received values of form: ', values);
   };
-  onCheckChange($event) {
-    console.log($event);
-    this.setState({
-      checked: $event.target.checked
-    })
-  }
+
   render() {
     return (
       <div id="Login" className="h-100 d-flex align-items-center justify-content-center">
-        <Card className="login-card" bordered={false} cover={<div className="p-4 bg-light"><h1>Jatai</h1></div>}>
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{ remember: true }}
-            onFinish={this.onFinish}
-          >
-            <Form.Item
-              name="username"
-              rules={[{ required: true, message: 'Please input your Username!' }]}
-            >
-              <Input prefix={<UserOutlined className="ewsite-form-item-icon" />} placeholder="Username" />
+        <Card className="login-card" bordered={false} cover={<div className="py-5 px-4 bg-light"><h1>Jatai</h1></div>}>
+          <Form initialValues={{ remember: true }} onFinish={this.onLogin}  >
+
+            <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]} >
+              <Input prefix={<UserOutlined />} placeholder="Username" />
             </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: 'Please input your Password!' }]}
-            >
-              <Input
-                prefix={<LockOutlined className="ewesite-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
+
+            <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}  >
+              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
             </Form.Item>
-            <Form.Item className="d-flex">
-              <Checkbox checked={this.state.checked} onChange={this.onCheckChange}>Remember me</Checkbox>
-              <Button type="link"> Forgot password</Button>
+
+            <Form.Item name="remember" valuePropName="checked">
+              <div className="d-flex align-items-center justify-content-between">
+                <Checkbox name="checked" defaultChecked={true}>Remember me</Checkbox>
+                <Button className="p-0" type="link"> Forgot password</Button>
+              </div>
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" className="d-block login-form-button">Login in </Button>
-            </Form.Item>
-            <Form.Item>
-              <Button className="p-0" type="link">Register now!</Button>
-            </Form.Item>
+
+            <Button type="primary" htmlType="submit" className="w-100 login-form-button">Login in </Button>
+            <Button className="my-4 p-0" type="text">Register now!</Button>
+
           </Form>
         </Card>
-
       </div>
     );
   }

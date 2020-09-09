@@ -28,4 +28,6 @@ class RxEventService {
     this.events[eventName].next(val);
   }
 }
-export default RxEventService;
+
+const rxSvc = new RxEventService();
+export default rxSvc;
