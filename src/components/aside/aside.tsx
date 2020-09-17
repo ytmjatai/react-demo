@@ -7,22 +7,25 @@ import rxSvc from '../../services/rx-event.service';
 import './aside.scss';
 import { Subscription } from 'rxjs/internal/Subscription';
 
-export default class Aside extends React.Component {
-  state = {
-    collapsed: false,
-  };
+export default class Aside extends React.Component<any, any> {
+
   toggle$: Subscription;
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: false,
+    };
+  }
 
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
 
   toggle() {
-    if (this.state.collapsed) {
-      this.setState({ collapsed: false })
-    } else {
-      this.setState({ collapsed: true })
-    }
+    this.setState(state => ({
+      collapsed: !state.collapsed
+    }));
+
   }
 
   componentDidMount() {

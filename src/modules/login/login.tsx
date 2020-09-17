@@ -1,15 +1,34 @@
 import React from 'react';
 
-import { Card, Form, Input, Button, Checkbox } from 'antd';
+import { Card, Form, Input, Button, Checkbox, Modal } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.scss';
 
+export default class Login extends React.Component {
 
+  props: IloginProps;
+  constructor(props) {
+    super(props);
+  }
 
-class Login extends React.Component {
-  onLogin = (values) => {
-    console.log('Received values of form: ', values);
+  onLogin = (form) => {
+    if (form.username === 'admin' && form.password === '123456') {
+      this.props.history.push('/home');
+      return;
+    };
+    Modal.error({
+      title: (<h2 className="text-danger">Login fail</h2>),
+      content: (<span className="text-danger">Please check your username or password </span>),
+      icon: null,
+      cancelText: null,
+      centered: true
+    });
   };
+
+  componentDidMount() {
+    console.log(this.props)
+
+  }
 
   render() {
     return (
@@ -18,11 +37,11 @@ class Login extends React.Component {
           <Form initialValues={{ remember: true }} onFinish={this.onLogin}  >
 
             <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]} >
-              <Input prefix={<UserOutlined />} placeholder="Username" />
+              <Input allowClear prefix={<UserOutlined />} placeholder="Username" />
             </Form.Item>
 
             <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}  >
-              <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+              <Input.Password allowClear prefix={<LockOutlined />} placeholder="Password" />
             </Form.Item>
 
             <Form.Item name="remember" valuePropName="checked">
@@ -33,7 +52,7 @@ class Login extends React.Component {
             </Form.Item>
 
             <Button type="primary" htmlType="submit" className="w-100 login-form-button">Login in </Button>
-            <Button className="my-4 p-0" type="text">Register now!</Button>
+            <Button className="my-4 p-0" type="link">Register now!</Button>
 
           </Form>
         </Card>
@@ -41,4 +60,6 @@ class Login extends React.Component {
     );
   }
 };
-export default Login;
+interface IloginProps {
+  history?: any[];
+}
