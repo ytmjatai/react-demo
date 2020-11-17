@@ -1,6 +1,6 @@
 import React from 'react';
 
 const Module2 = ()=>(
-  <div>module2</div>
+  <div>管理</div>
 );
 export default Module2;

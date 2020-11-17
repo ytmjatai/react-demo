@@ -23,8 +23,8 @@ class Home extends React.Component {
           <Layout className="border-left">
             <Layout.Content className="p-2 bg-white">
               <Switch>
-                <Route path="/home/module1" component={Module1} />
-                <Route path="/home/module2" component={Module2} />
+                <Route path="/home/book" component={Module1} />
+                <Route path="/home/category" component={Module2} />
               </Switch>
             </Layout.Content>
           </Layout>

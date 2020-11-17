@@ -1,8 +1,10 @@
 import React from 'react';
 import { Avatar, Menu, Dropdown, Button, message, Tooltip } from 'antd';
 import { SettingOutlined, UserOutlined, MoreOutlined, LogoutOutlined } from '@ant-design/icons';
+import { withRouter } from 'react-router-dom'
 
-export default class Profile extends React.Component<any, IProfileProps> {
+ class Profile extends React.Component {
+  props: any;
 
   constructor(props) {
     super(props);
@@ -24,15 +26,20 @@ export default class Profile extends React.Component<any, IProfileProps> {
 
   cl = ($event) => {
     console.log($event);
-    console.log(this.props);
+    console.log(this);
     this.props.history.push('/login');
   }
 
+  componentDidMount() {
+    console.log(this.props)
+
+  }
   render() {
     return (
       <>
         <Dropdown overlay={this.menus}>
           <Button className="border-0" type="text" >
+            <span className="mr-2">admin</span>
             <Avatar size="small" icon={<UserOutlined />} />
             <MoreOutlined className="ml-1 pt-1 align-middle" />
           </Button>
@@ -41,6 +48,8 @@ export default class Profile extends React.Component<any, IProfileProps> {
     );
   }
 }
+
+export default withRouter(Profile);
 interface IProfileProps {
   history?: any;
 }

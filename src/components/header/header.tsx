@@ -7,7 +7,7 @@ import rxSvc from '../../services/rx-event.service';
 
 class Header extends React.Component {
 
-  toggleAside() {
+  toggleAside = () => {
     rxSvc.publish('toggle-aside', null);
   }
   render() {

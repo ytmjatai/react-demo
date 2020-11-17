@@ -32,9 +32,20 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
-    compress: true,
+    // compress: true,
     historyApiFallback: true,
-    index: 'index.html' 
+    index: 'index.html',
+    // proxy: {
+    //   '/auth': {
+    //       target: 'http://localhost:3000/',
+    //   },
+    //   '/api': {
+    //     target: 'http://www.baidu.com/',
+    //     pathRewrite: { '^/api': '' },
+    //     changeOrigin: true,     // target是域名的话，需要这个参数，
+    //     secure: false,          // 设置支持https协议的代理
+    //   },
+    // }
   },
   watch: true,
   watchOptions: {

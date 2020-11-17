@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Layout, Menu } from 'antd';
-import { DesktopOutlined, UserOutlined, } from '@ant-design/icons';
+import * as Icon from '@ant-design/icons';
 
 import rxSvc from '../../services/rx-event.service';
 import './aside.scss';
 import { Subscription } from 'rxjs/internal/Subscription';
+import axios from '../../services/axios-interceptor';
+import enviroment from '../../../config/environment';
 
 export default class Aside extends React.Component<any, any> {
 
@@ -14,6 +16,7 @@ export default class Aside extends React.Component<any, any> {
     super(props);
     this.state = {
       collapsed: false,
+      menus: []
     };
   }
 
@@ -28,38 +31,41 @@ export default class Aside extends React.Component<any, any> {
 
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.toggle$ = rxSvc.on('toggle-aside').subscribe(
       _ => this.toggle()
     );
+
+    const url = enviroment.apiUrl + '/menu/'
+    axios.get(url).then(res => {
+      const menus = res.data;
+      this.setState({
+        menus: menus
+      });
+    }).catch(error => {
+      console.error(error);
+    })
   }
 
-  componentWillUnmount() {
-    this.toggle$.unsubscribe();
-  }
+  componentWillUnmount() { this.toggle$.unsubscribe(); }
 
   render() {
+    const buildIcon = (name) => React.createElement(Icon[name]);
+    const items = this.state.menus.map((menu, idx) =>
+      <Menu.Item key={idx} icon={menu.icon ? buildIcon(menu.icon) : ''}>
+        <Link to={menu.url}>{menu.title}</Link>
+      </Menu.Item>
+    );
     return (
       <Layout.Sider
-        collapsible theme="light"
-        collapsed={this.state.collapsed}
-        onCollapse={this.onCollapse}
-        collapsedWidth="40"
-        trigger={null}
+        collapsible theme="light" collapsed={this.state.collapsed}
+        onCollapse={this.onCollapse} collapsedWidth="40" trigger={null}
       >
         <Menu
-          className="border-right-0"
-          theme="light"
-          defaultSelectedKeys={['1']}
-          mode="inline"
-          inlineIndent={12}
+          className="border-right-0" theme="light"
+          defaultSelectedKeys={['1']} mode="inline" inlineIndent={12}
         >
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            <Link to="/home/module1">Module1</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            <Link to="/home/module2">Module2</Link>
-          </Menu.Item>
+          {items}
         </Menu>
       </Layout.Sider>
     );

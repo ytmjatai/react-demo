@@ -1,17 +1,10 @@
 import { Subject } from 'rxjs/internal/Subject';
 
-
 class RxEventService {
   private events: { [key: string]: Subject<any>; } = {};
   private values: { [key: string]: any } = {};
-  private static instance = new RxEventService();
 
-  constructor() {
-  }
-
-  public static getInstance() {
-    return this.instance;
-  }
+  constructor() {  }
 
   on(eventName: string) {
     if (!this.events[eventName] || this.events[eventName].isStopped) {
@@ -27,7 +20,7 @@ class RxEventService {
     this.values[eventName] = val;
     this.events[eventName].next(val);
   }
-}
 
+}
 const rxSvc = new RxEventService();
 export default rxSvc;

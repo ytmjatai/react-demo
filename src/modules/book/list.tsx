@@ -1,8 +1,8 @@
 import React from 'react';
-import enviroment from '../../config/environment';
-import axios from '../services/axios-interceptor';
+import enviroment from '../../../config/environment';
+import axios from '../../services/axios-interceptor';
 
-class Module1 extends React.Component {
+class List extends React.Component {
 
 
  componentDidMount() {
@@ -23,7 +23,4 @@ class Module1 extends React.Component {
 
 
 }
-// const Module1 = () => (
-//   <div>module1</div>
-// );
-export default Module1;
+export default List;

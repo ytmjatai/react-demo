@@ -1,8 +1,11 @@
 import React from 'react';
+import axios from 'axios';
 
 import { Card, Form, Input, Button, Checkbox, Modal } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.scss';
+
+import enviroment from '../../../config/environment';
 
 export default class Login extends React.Component {
 
@@ -11,23 +14,38 @@ export default class Login extends React.Component {
     super(props);
   }
 
-  onLogin = (form) => {
-    if (form.username === 'admin' && form.password === '123456') {
+  onLogin = async (form) => {
+    const url = enviroment.authUrl + '/jwt/create/'
+    axios.post(url, {
+      username: form.username,
+      password: form.password
+    }).then(res => {
+
+      const token = res.data.access;
+      localStorage.setItem('token', token);
       this.props.history.push('/home');
-      return;
-    };
+    }).catch(error => {
+      console.log(error);
+      this.showError();
+    });
+  };
+
+  showError() {
     Modal.error({
       title: (<h2 className="text-danger">Login fail</h2>),
-      content: (<span className="text-danger">Please check your username or password </span>),
+      content: (
+        <span className="text-danger">
+          Please check your username or password
+        </span>
+      ),
       icon: null,
       cancelText: null,
       centered: true
     });
-  };
+  }
 
   componentDidMount() {
     console.log(this.props)
-
   }
 
   render() {
