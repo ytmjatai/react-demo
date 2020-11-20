@@ -1,10 +1,15 @@
-export interface MenuModel {
+import { PublisherModel } from "./publisher";
+import { AuthorModel } from "./author";
+import { CategoryModel } from "./category";
+
+export interface BookModel {
+  id?: number;
   ISBN?: string;
   title?: string;
-  author?: any;
-  publisher?: any;
+  author?: AuthorModel;
+  publisher?: PublisherModel;
   summary?: string;
-  category?: any;
+  category?: CategoryModel;
   thumbnail?: string;
   pictures?: string;
   status?: boolean;

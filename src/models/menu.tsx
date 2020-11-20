@@ -1,4 +1,5 @@
 export interface MenuModel {
+  id?: number;
   title?: string;
   parentId?: number;
   url?: string;

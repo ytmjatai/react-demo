@@ -37,7 +37,7 @@ export default class Aside extends React.Component<any, any> {
     );
 
     const url = enviroment.apiUrl + '/menu/'
-    axios.get(url).then(res => {
+    axios.get(url).then((res:any) => {
       const menus = res.data;
       this.setState({
         menus: menus
@@ -63,7 +63,7 @@ export default class Aside extends React.Component<any, any> {
       >
         <Menu
           className="border-right-0" theme="light"
-          defaultSelectedKeys={['1']} mode="inline" inlineIndent={12}
+          defaultSelectedKeys={['0']} mode="inline" inlineIndent={12}
         >
           {items}
         </Menu>

@@ -3,6 +3,10 @@ import { Avatar, Menu, Dropdown, Button, message, Tooltip } from 'antd';
 import { SettingOutlined, UserOutlined, MoreOutlined, LogoutOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom'
 
+
+import enviroment from '../../../config/environment';
+import axios from '../../services/axios-interceptor';
+
  class Profile extends React.Component {
   props: any;
 
@@ -32,6 +36,16 @@ import { withRouter } from 'react-router-dom'
 
   componentDidMount() {
     console.log(this.props)
+    const url = enviroment.authUrl + '/users/me/'
+    axios.get(url).then((res:any) => {
+      const books = res.data;
+      this.setState({
+        loading: false,
+        books: books
+      })
+    }).catch(error => {
+      console.log(error);
+    });
 
   }
   render() {

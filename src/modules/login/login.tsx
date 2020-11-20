@@ -23,7 +23,7 @@ export default class Login extends React.Component {
 
       const token = res.data.access;
       localStorage.setItem('token', token);
-      this.props.history.push('/home');
+      this.props.history.push('/home/book/list');
     }).catch(error => {
       console.log(error);
       this.showError();
