@@ -1,13 +1,13 @@
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
-import { AuthorModel } from '../models/author';
+import { PublisherModel } from '../models/publisher';
 
-const getList = (): Promise<AuthorModel[]> => {
-  const url = enviroment.apiUrl + '/author/'
+const getList = (): Promise<PublisherModel[]> => {
+  const url = enviroment.apiUrl + '/publisher/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
-      const authors = res.data;
-      resolve(authors);
+      const publishers = res.data;
+      resolve(publishers);
     }).catch(error => {
       console.log(error);
       reject(error);
@@ -15,12 +15,12 @@ const getList = (): Promise<AuthorModel[]> => {
   })
 }
 
-const getById = (id: number): Promise<AuthorModel> => {
-  const url = `${enviroment.apiUrl}/author/${id}/`;
+const getById = (id: number): Promise<PublisherModel> => {
+  const url = `${enviroment.apiUrl}/publisher/${id}/`;
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
-      const author = res.data;
-      resolve(author);
+      const publisher = res.data;
+      resolve(publisher);
     }).catch(error => {
       console.log(error);
       reject(error);
@@ -28,13 +28,12 @@ const getById = (id: number): Promise<AuthorModel> => {
   })
 }
 
-const add = (model: AuthorModel): Promise<AuthorModel> => {
-  const url = `${enviroment.apiUrl}/author/`;
+const add = (model: PublisherModel): Promise<PublisherModel> => {
+  const url = `${enviroment.apiUrl}/publisher/`;
   return new Promise((resolve, reject) => {
     axios.post(url, model).then((res: any) => {
-      console.log(res);
-      const author = res.data;
-      resolve(author);
+      const publisher = res.data;
+      resolve(publisher);
     }).catch(error => {
       console.log(error);
       reject(error);

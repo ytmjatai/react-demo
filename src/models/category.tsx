@@ -8,4 +8,5 @@ export interface CategoryModel {
 
   value?: number | string;
   pId ?: number;
+  pid ?: number;
 }
