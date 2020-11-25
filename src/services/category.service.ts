@@ -1,12 +1,17 @@
+import { BehaviorSubject } from 'rxjs';
+
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
 import { CategoryModel } from '../models/category';
+
+const categories$ = new BehaviorSubject<CategoryModel[]>([]);
 
 const getList = (): Promise<CategoryModel[]> => {
   const url = enviroment.apiUrl + '/category/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
       const cates = res.data;
+      categories$.next(cates);
       resolve(cates);
     }).catch(error => {
       console.log(error);
@@ -28,4 +33,4 @@ const getById = (id: number): Promise<CategoryModel> => {
   })
 }
 
-export { getList, getById };
+export { getList, getById, categories$ };

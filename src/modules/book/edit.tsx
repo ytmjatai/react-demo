@@ -1,4 +1,4 @@
-import React, { useState, useEffect, EffectCallback, SyntheticEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Form, Input, Button, Radio,
   Select, Cascader, DatePicker,
@@ -161,11 +161,7 @@ const Edit = () => {
   return (
 
     <>
-      <Form
-        layout="vertical"
-        form={form}
-        size='middle'
-      >
+      <Form layout="vertical" form={form} size="middle">
 
         <Form.Item label="ISBN" name="ISBN" rules={[{ required: true, message: '请输入ISBN!' }]}>
           <Input />
