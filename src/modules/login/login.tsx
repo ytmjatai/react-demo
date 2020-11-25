@@ -35,7 +35,7 @@ export default class Login extends React.Component {
       title: (<h2 className="text-danger">Login fail</h2>),
       content: (
         <span className="text-danger">
-          Please check your username or password
+          请输入正确的用户名和密码
         </span>
       ),
       icon: null,
@@ -51,26 +51,26 @@ export default class Login extends React.Component {
   render() {
     return (
       <div id="Login" className="h-100 d-flex align-items-center justify-content-center">
-        <Card className="login-card" bordered={false} cover={<div className="py-5 px-4 bg-light"><h1>Jatai</h1></div>}>
+        <Card className="login-card" bordered={false} cover={<div className="py-5 px-4 bg-light"><h1>图书管理系统</h1></div>}>
           <Form initialValues={{ remember: true }} onFinish={this.onLogin}  >
 
-            <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]} >
-              <Input allowClear prefix={<UserOutlined />} placeholder="Username" />
+            <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]} >
+              <Input allowClear prefix={<UserOutlined />} placeholder="用户名" />
             </Form.Item>
 
-            <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}  >
-              <Input.Password allowClear prefix={<LockOutlined />} placeholder="Password" />
+            <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]}  >
+              <Input.Password allowClear prefix={<LockOutlined />} placeholder="密码" />
             </Form.Item>
 
             <Form.Item name="remember" valuePropName="checked">
               <div className="d-flex align-items-center justify-content-between">
-                <Checkbox name="checked" defaultChecked={true}>Remember me</Checkbox>
-                <Button className="p-0" type="link"> Forgot password</Button>
+                <Checkbox name="checked" defaultChecked={true}>记住帐号</Checkbox>
+                <Button className="p-0" type="link"> 忘记密码</Button>
               </div>
             </Form.Item>
 
-            <Button type="primary" htmlType="submit" className="w-100 login-form-button">Login in </Button>
-            <Button className="my-4 p-0" type="link">Register now!</Button>
+            <Button type="primary" htmlType="submit" className="w-100 login-form-button">登录 </Button>
+            <Button className="my-4 p-0" type="link">注册</Button>
 
           </Form>
         </Card>
