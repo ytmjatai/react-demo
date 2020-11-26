@@ -1,10 +1,10 @@
-import React, { useState, useEffect, EffectCallback } from 'react';
+import React from 'react';
 import loadable from '@loadable/component'
-import { render } from 'react-dom';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col } from 'antd';
 
 const List = loadable(() => import('./list/list'));
 const Edit = loadable(() => import('./edit/edit'));
+const Detail = loadable(() => import('./detail/detail'));
 
 import './category.scss';
 
@@ -15,7 +15,7 @@ const Category = () => {
     <div className="h-100">
       <Row className="h-100">
         <Col flex="500px" className="h-100 overflow-hidden"> <List /> </Col>
-        <Col flex="auto" className="ml-3 border-left"> <Edit />  </Col>
+        <Col flex="auto" style={{ maxWidth: '600px' }} className="detail ml-1 border-left p-4"> <Detail />  </Col>
       </Row>
 
 

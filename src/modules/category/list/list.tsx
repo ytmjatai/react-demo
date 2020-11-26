@@ -21,9 +21,15 @@ const List = () => {
 
   const [categories, setCategories] = useState<DataNode[]>([])
   const onCategoriesChange = async () => {
-
     const tree = cateSvc.getTreeData('id', 'title');
     setCategories(tree);
+  }
+
+  const onCateSelect = (keys, e) => {
+    console.log(keys);
+    console.log(e);
+    const cate = e.selectedNodes[0];
+    cateSvc.cateSelect$.next(cate);
   }
 
   return (
@@ -43,8 +49,10 @@ const List = () => {
         showLine
         blockNode={true}
         titleRender={
-          (node: TreeDataModel) => <div className="aaaaaaaaaaaaaaaaa">{node.code + '、' + node.title + ' - ' + node.id}</div>
-        } />
+          (node: TreeDataModel) => <>{node.code + '、' + node.title + ' - ' + node.id}</>
+        }
+        onSelect={onCateSelect}
+      />
     </div>
   )
 }

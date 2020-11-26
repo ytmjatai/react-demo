@@ -7,6 +7,7 @@ import { AntdTreeModel } from '../models/antd-tree';
 import { DataNode } from 'antd/lib/tree';
 
 const categories$ = new BehaviorSubject<CategoryModel[]>([]);
+const cateSelect$ = new BehaviorSubject<CategoryModel>(null);
 
 const getList = (): Promise<CategoryModel[]> => {
   const url = enviroment.apiUrl + '/category/'
@@ -58,4 +59,4 @@ const getById = (id: number): Promise<CategoryModel> => {
   })
 }
 
-export { getList, getById, categories$, getTreeData };
+export { getList, getById, getTreeData, categories$, cateSelect$ };

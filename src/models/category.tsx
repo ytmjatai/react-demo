@@ -7,6 +7,6 @@ export interface CategoryModel {
   sequence?: number;
 
   value?: number | string;
-  pId ?: number;
-  pid ?: number;
+  pId?: number;
+  pid?: number;
 }
