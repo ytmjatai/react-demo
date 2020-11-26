@@ -1,6 +1,6 @@
 export interface CategoryModel {
   id?: number;
-  title?: string;
+  title?: string | React.ReactNode;
   code?: string;
   parentId?: number;
   url?: string;

@@ -14,7 +14,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout className="h-100">
         <Header />
         <Layout>
           <Aside />
