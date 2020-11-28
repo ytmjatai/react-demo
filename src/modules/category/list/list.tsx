@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Radio, Tree, Divider } from 'antd';
+import React, { useRef, MutableRefObject, useState, useEffect } from 'react';
+import { Radio, Tree, Divider, Modal, Button, Space } from 'antd';
+import {
+  SyncOutlined, PlusOutlined, EditOutlined, DeleteOutlined
+} from '@ant-design/icons';
 
 import * as cateSvc from '../../../services/category.service';
 import { CategoryModel } from '../../../models/category';
 import { DataNode } from 'antd/lib/tree';
-
 import './list.scss'
+import Edit from '../edit/edit';
+
+import {openAlert} from '../../../components/alert/alert';
 
 const List = () => {
+  const editRef: MutableRefObject<EditModel> = useRef();
+
+  const [categories, setCategories] = useState<DataNode[]>([]);
+  const [editVisible, setEditVisible] = useState(false);
 
   useEffect(() => {
     cateSvc.getList();
@@ -19,46 +28,87 @@ const List = () => {
     }
   }, []);
 
-  const [categories, setCategories] = useState<DataNode[]>([])
   const onCategoriesChange = async () => {
     const tree = cateSvc.getTreeData('id', 'title');
     setCategories(tree);
   }
 
   const onCateSelect = (keys, e) => {
-    console.log(keys);
-    console.log(e);
-    const cate = e.selectedNodes[0];
+
+    const cate = e.selectedNodes[0] ? e.selectedNodes[0] : {};
     cateSvc.cateSelect$.next(cate);
   }
 
+  const onSubmit = async () => {
+    const res = await editRef.current.onSubmit();
+    console.log(res);
+  }
+
+  const closeEdit = () => {
+    console.log('close edit');
+  }
+
+  const onRefresh = () => {
+    cateSvc.action$.next('add');
+    setEditVisible(true);
+  }
+
+  const onAction = (action: 'add' | 'edit') => {
+    cateSvc.action$.next(action);
+    setEditVisible(true);
+  }
+
+  const onDelete = () => {
+    const cate = cateSvc.cateSelect$.getValue();
+    if(!cate || !cate.id) {
+      openAlert({
+        message: '请选择要删除的分类',
+        type: 'warning'
+      })
+      return;
+    }
+  }
+
+
+
   return (
     <div className="category d-flex flex-column h-100">
-
-      <Radio.Group defaultValue="a" buttonStyle="solid">
-        <Radio.Button value="c">刷新</Radio.Button>
-        <Radio.Button value="a">添加</Radio.Button>
-        <Radio.Button value="b">编辑</Radio.Button>
-        <Radio.Button value="d">删除</Radio.Button>
-      </Radio.Group>
+      <Space size={5}>
+        <Button icon={<SyncOutlined />} onClick={onRefresh}>刷新 </Button>
+        <Button icon={<PlusOutlined />} onClick={onAction.bind(this, 'add')}> 添加 </Button>
+        <Button icon={<EditOutlined />} onClick={onAction.bind(this, 'edit')}>  编辑  </Button>
+        <Button icon={<DeleteOutlined />} onClick={onDelete}>  删除  </Button>
+      </Space>
       <Divider className="my-2" />
-
       <Tree
         className="overflow-auto"
         treeData={categories}
         showLine
         blockNode={true}
         titleRender={
-          (node: TreeDataModel) => <>{node.code + '、' + node.title + ' - ' + node.id}</>
+          (node: TreeDataModel) => <>{node.code + '、' + node.title}</>
         }
         onSelect={onCateSelect}
       />
+      <Modal
+        title={<div className="text-left font-weight-bold">添加 / 编辑书籍</div>}
+        visible={editVisible}
+        destroyOnClose
+        maskClosable={false}
+        onOk={onSubmit}
+        onCancel={() => setEditVisible(false)}
+      >
+        <Edit onClose={closeEdit} ref={editRef} />
+      </Modal>
+
     </div>
   )
 }
 
 export default List;
 
-interface TreeDataModel extends DataNode, CategoryModel {
+interface TreeDataModel extends DataNode, CategoryModel { }
 
+interface EditModel {
+  onSubmit: Function;
 }

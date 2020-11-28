@@ -14,7 +14,7 @@ class Header extends React.Component {
     return (
       <div className="d-flex align-items-center p-2 border-bottom bg-white">
         <Button icon={<MenuOutlined />} onClick={this.toggleAside} />
-        <h1 className="mb-0 ml-3 text-primary">React Demo</h1>
+        <h1 className="mb-0 ml-3 text-primary">Angular Demo</h1>
 
         <div className="ml-auto">
           <Profile />

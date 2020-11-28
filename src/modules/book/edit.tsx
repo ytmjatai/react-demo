@@ -15,21 +15,30 @@ import * as pubSvc from '../../services/publisher.service';
 import * as authorSvc from '../../services/author.service';
 import { AuthorModel } from '../../models/author';
 import { PublisherModel } from '../../models/publisher';
+import { CategoryModel } from '../../models/category';
 
 const Edit = () => {
 
+  const [form] = Form.useForm();
+  const [categories, setCategories] = useState<CategoryModel[]>([]);
+  const [authors, setAuthors] = useState([]);
+  const [author, setAuthor] = useState('');
+  const [publishers, setPublishers] = useState([]);
+  const [publisher, setPublisher] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+
   const initUI = async () => {
-    const [book, cates, authors, publishers] = await Promise.all([
+    const [book, authors, publishers] = await Promise.all([
       bookSvc.getById(1),
-      cateSvc.getList(),
       authorSvc.getList(),
-      pubSvc.getList()
+      pubSvc.getList(),
+      cateSvc.getList(),
     ]);
-    for (const cate of cates) {
-      cate.value = cate.title,
-        cate.pid = cate.parentId ? cate.parentId : 0
-    }
-    setCategories(cates);
+
+    const cs = cateSvc.getTreeData();
+    setCategories(cs);
 
     const auts = [];
     for (const author of authors) {
@@ -61,28 +70,30 @@ const Edit = () => {
 
   useEffect(() => {
     initUI();
-    const author$ = rxSvc.on('authors-change').subscribe(_ => onAuthorsChange());
-    const cate$ = rxSvc.on('category-change').subscribe(_ => onPublishersChange());
+    const author$ = authorSvc.authors$.subscribe(
+      (authors) => onAuthorsChange(authors)
+    );
+
+    const cate$ = cateSvc.categories$.subscribe((cates) => onCatesChange(cates));
     return () => {
       author$.unsubscribe();
       cate$.unsubscribe();
     }
   }, []);
 
-  const onAuthorsChange = async () => {
-    const as = await authorSvc.getList();
+  const onCatesChange = (cates) => {
+
+  }
+
+  const onAuthorsChange = async (authors) => {
     const auts = [];
-    for (const author of as) {
+    for (const author of authors) {
       auts.push({
         label: author.first_name + author.last_name,
         value: author.id
       })
     }
-    setFirstName('');
-    setLastName('');
     setAuthors(auts);
-
-
   }
   const onPublishersChange = async () => {
 
@@ -98,15 +109,6 @@ const Edit = () => {
     setPublishers(pubs);
   }
 
-  const [form] = Form.useForm();
-  const [categories, setCategories] = useState([])
-  const [authors, setAuthors] = useState([])
-  const [author, setAuthor] = useState('')
-  const [publishers, setPublishers] = useState([])
-  const [publisher, setPublisher] = useState('')
-
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
 
 
   const onFieldChange = (field: string, e: any) => {
@@ -139,14 +141,15 @@ const Edit = () => {
     }
   }
 
-
   const addAuthor = async () => {
     const model: AuthorModel = {
       first_name: firstName,
       last_name: lastName
     }
     await authorSvc.add(model);
-    onAuthorsChange();
+    setFirstName('');
+    setLastName('');
+    await authorSvc.getList();
   }
 
   const addPublisher = async () => {
@@ -159,18 +162,14 @@ const Edit = () => {
   }
 
   return (
-
     <>
       <Form layout="vertical" form={form} size="middle">
-
         <Form.Item label="ISBN" name="ISBN" rules={[{ required: true, message: '请输入ISBN!' }]}>
           <Input />
         </Form.Item>
-
         <Form.Item label="书籍名称" name="title" rules={[{ required: true, message: '请输入书籍名称!' }]}>
           <Input />
         </Form.Item>
-
         <Form.Item label="作者" name="author">
           <Select
             allowClear
@@ -212,7 +211,7 @@ const Edit = () => {
         </Form.Item>
 
         <Form.Item label="分类" name="category">
-          <Select options={categories} />
+          <TreeSelect treeData={categories} />
         </Form.Item>
 
         <Form.Item label="简介" name="summary">

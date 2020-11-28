@@ -32,7 +32,7 @@ export default class Login extends React.Component {
 
   showError() {
     Modal.error({
-      title: (<h2 className="text-danger">Login fail</h2>),
+      title: (<h2 className="text-danger">提示：</h2>),
       content: (
         <span className="text-danger">
           请输入正确的用户名和密码

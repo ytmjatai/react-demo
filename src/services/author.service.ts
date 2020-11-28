@@ -1,12 +1,16 @@
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
 import { AuthorModel } from '../models/author';
+import { Subject } from 'rxjs';
+
+const authors$ = new Subject();
 
 const getList = (): Promise<AuthorModel[]> => {
   const url = enviroment.apiUrl + '/author/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
       const authors = res.data;
+      authors$.next(authors);
       resolve(authors);
     }).catch(error => {
       console.log(error);
@@ -42,4 +46,4 @@ const add = (model: AuthorModel): Promise<AuthorModel> => {
   })
 }
 
-export { getList, getById, add };
+export { getList, getById, add, authors$ };

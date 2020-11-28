@@ -7,7 +7,8 @@ import { AntdTreeModel } from '../models/antd-tree';
 import { DataNode } from 'antd/lib/tree';
 
 const categories$ = new BehaviorSubject<CategoryModel[]>([]);
-const cateSelect$ = new BehaviorSubject<CategoryModel>(null);
+const cateSelect$ = new BehaviorSubject<CategoryModel>({});
+const action$ = new BehaviorSubject<'add' | 'edit'>('add');
 
 const getList = (): Promise<CategoryModel[]> => {
   const url = enviroment.apiUrl + '/category/'
@@ -23,26 +24,23 @@ const getList = (): Promise<CategoryModel[]> => {
   })
 }
 
-const getTreeData = (keyField, titleField): DataNode[] => {
+const getTreeData = (keyField = 'id', titleField = 'title'): DataNode[] => {
   const cates = categories$.getValue();
-
   const treeData = cates.map(
     cate => Object.assign({
       key: cate[keyField],
       title: cate[titleField],
-      children: null
     }, cate)
-  )
-  console.log(treeData)
+  );
   return treeData.filter(root => {
     const childArr = treeData.filter(cate => cate.parentId === root.id);
     if (childArr.length) {
-      root.children = childArr;
+      root['children'] = childArr;
     }
     if (!root.parentId) {
       return root;
     }
-  })
+  });
 }
 
 
@@ -59,4 +57,4 @@ const getById = (id: number): Promise<CategoryModel> => {
   })
 }
 
-export { getList, getById, getTreeData, categories$, cateSelect$ };
+export { getList, getById, getTreeData, categories$, cateSelect$, action$ };

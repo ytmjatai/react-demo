@@ -30,7 +30,7 @@ const Detail = () => {
 
 
   return (
-    <div>
+    <>
 
       <Form labelAlign="right" labelCol={{ span: 3 }}>
         <Form.Item label="分类名称" >
@@ -45,13 +45,11 @@ const Detail = () => {
         <Form.Item label="上级分类">
           <Input readOnly value={pcate?.title ? pcate.title.toString() : ''} />
         </Form.Item>
-
         <Form.Item label="排序">
           <Input readOnly value={cate?.sequence ? cate?.sequence : ''} />
         </Form.Item>
-
       </Form>
-    </div>
+    </>
   )
 }
 

@@ -104,9 +104,6 @@ class List extends React.Component<any, StateModel> {
         />
 
         <Modal
-          // title={null}
-          // closable={false}
-          // footer={null}
           title={ <div className="text-left font-weight-bold">添加 / 编辑书籍</div>}
           visible={visible}
           destroyOnClose
