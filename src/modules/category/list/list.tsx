@@ -10,7 +10,7 @@ import { DataNode } from 'antd/lib/tree';
 import './list.scss'
 import Edit from '../edit/edit';
 
-import {openAlert} from '../../../components/alert/alert';
+import { openAlert } from '../../../components/alert/alert';
 
 const List = () => {
   const editRef: MutableRefObject<EditModel> = useRef();
@@ -34,14 +34,14 @@ const List = () => {
   }
 
   const onCateSelect = (keys, e) => {
-
     const cate = e.selectedNodes[0] ? e.selectedNodes[0] : {};
     cateSvc.cateSelect$.next(cate);
   }
 
   const onSubmit = async () => {
-    const res = await editRef.current.onSubmit();
-    console.log(res);
+    await editRef.current.onSubmit();
+    setEditVisible(false);
+    cateSvc.getList();
   }
 
   const closeEdit = () => {
@@ -55,12 +55,21 @@ const List = () => {
 
   const onAction = (action: 'add' | 'edit') => {
     cateSvc.action$.next(action);
+    const cate = cateSvc.cateSelect$.getValue();
+    if ((action === 'edit') && (!cate || !cate.id)) {
+      openAlert({
+        message: '请选择要编辑的分类',
+        type: 'warning'
+      })
+      return;
+    }
+
     setEditVisible(true);
   }
 
   const onDelete = () => {
     const cate = cateSvc.cateSelect$.getValue();
-    if(!cate || !cate.id) {
+    if (!cate || !cate.id) {
       openAlert({
         message: '请选择要删除的分类',
         type: 'warning'
@@ -91,7 +100,7 @@ const List = () => {
         onSelect={onCateSelect}
       />
       <Modal
-        title={<div className="text-left font-weight-bold">添加 / 编辑书籍</div>}
+        title={<div className="text-left font-weight-bold">{cateSvc.action$.getValue() === 'add' ? '添加' : '编辑'}书籍</div>}
         visible={editVisible}
         destroyOnClose
         maskClosable={false}

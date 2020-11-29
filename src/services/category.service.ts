@@ -57,4 +57,33 @@ const getById = (id: number): Promise<CategoryModel> => {
   })
 }
 
-export { getList, getById, getTreeData, categories$, cateSelect$, action$ };
+const add = (model: CategoryModel): Promise<CategoryModel> => {
+  const url = `${enviroment.apiUrl}/category/`;
+  return new Promise((resolve, reject) => {
+    axios.post(url, model).then((res: any) => {
+      const cate = res.data;
+      resolve(cate);
+    }).catch(error => {
+      console.log(error);
+      reject(error);
+    });
+  })
+}
+
+const edit = (model: CategoryModel): Promise<CategoryModel> => {
+  const url = `${enviroment.apiUrl}/category/${model.id}/`;
+  return new Promise((resolve, reject) => {
+    axios.put(url, model).then((res: any) => {
+      const cate = res.data;
+      resolve(cate);
+    }).catch(error => {
+      console.log(error);
+      reject(error);
+    });
+  })
+}
+
+export {
+  getList, getTreeData, getById, add, edit,
+  categories$, cateSelect$, action$
+};
