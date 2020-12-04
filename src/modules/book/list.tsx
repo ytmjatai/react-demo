@@ -3,10 +3,10 @@ import { Table, Modal, Button, Tag, Radio, Space } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 
-import { BookModel } from '../../models/book';
-import { AuthorModel } from '../../models/author';
-import { CategoryModel } from '../../models/category';
-import { PublisherModel } from '../../models/publisher';
+import { IBook } from '../../models/book';
+import { IAuthor } from '../../models/author';
+import { ICategory } from '../../models/category';
+import { IPublisher } from '../../models/publisher';
 
 import * as bookSvc from '../../services/book.service';
 
@@ -35,15 +35,15 @@ class List extends React.Component<any, StateModel> {
     { title: '摘要', dataIndex: 'summary', },
     {
       title: '作者', dataIndex: 'author',
-      render: (a: AuthorModel) => `${a.first_name}${a.last_name}`
+      render: (a: IAuthor) => `${a.first_name}${a.last_name}`
     },
     {
       title: '所在分类', dataIndex: 'category',
-      render: (c: CategoryModel) => `${c?.title ? c.title : ''}`
+      render: (c: ICategory) => `${c?.title ? c.title : ''}`
     },
     {
       title: '出版社', dataIndex: 'publisher',
-      render: (p: PublisherModel) => `${p?.name ? p.name : ''}`
+      render: (p: IPublisher) => `${p?.name ? p.name : ''}`
     },
     {
       title: '操作', key: 'id',
@@ -122,7 +122,7 @@ class List extends React.Component<any, StateModel> {
 export default List;
 
 interface StateModel {
-  books?: BookModel[];
+  books?: IBook[];
   loading?: boolean;
   editVisible?: boolean;
   confirmLoading?: boolean;

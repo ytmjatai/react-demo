@@ -1,4 +1,4 @@
-export interface CategoryModel {
+export interface ICategory {
   id?: number;
   title?: string | React.ReactNode;
   code?: string;

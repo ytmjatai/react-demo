@@ -1,8 +1,8 @@
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
-import { BookModel } from '../models/book';
+import { IBook } from '../models/book';
 
-const getList = (): Promise<BookModel[]> => {
+const getList = (): Promise<IBook[]> => {
   const url = enviroment.apiUrl + '/book/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
@@ -15,7 +15,7 @@ const getList = (): Promise<BookModel[]> => {
   })
 }
 
-const getById = (id: number): Promise<BookModel> => {
+const getById = (id: number): Promise<IBook> => {
   const url = `${enviroment.apiUrl}/book/${id}/`;
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {

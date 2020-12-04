@@ -1,15 +1,15 @@
-import { PublisherModel } from "./publisher";
-import { AuthorModel } from "./author";
-import { CategoryModel } from "./category";
+import { IPublisher } from "./publisher";
+import { IAuthor } from "./author";
+import { ICategory } from "./category";
 
-export interface BookModel {
+export interface IBook {
   id?: number;
   ISBN?: string;
   title?: string;
-  author?: AuthorModel;
-  publisher?: PublisherModel;
+  author?: IAuthor;
+  publisher?: IPublisher;
   summary?: string;
-  category?: CategoryModel;
+  category?: ICategory;
   thumbnail?: string;
   pictures?: string;
   status?: boolean;

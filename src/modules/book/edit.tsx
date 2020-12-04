@@ -13,14 +13,14 @@ import * as bookSvc from '../../services/book.service';
 import * as cateSvc from '../../services/category.service';
 import * as pubSvc from '../../services/publisher.service';
 import * as authorSvc from '../../services/author.service';
-import { AuthorModel } from '../../models/author';
-import { PublisherModel } from '../../models/publisher';
-import { CategoryModel } from '../../models/category';
+import { IAuthor } from '../../models/author';
+import { IPublisher } from '../../models/publisher';
+import { ICategory } from '../../models/category';
 
 const Edit = () => {
 
   const [form] = Form.useForm();
-  const [categories, setCategories] = useState<CategoryModel[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [authors, setAuthors] = useState([]);
   const [author, setAuthor] = useState('');
   const [publishers, setPublishers] = useState([]);
@@ -142,7 +142,7 @@ const Edit = () => {
   }
 
   const addAuthor = async () => {
-    const model: AuthorModel = {
+    const model: IAuthor = {
       first_name: firstName,
       last_name: lastName
     }
@@ -153,7 +153,7 @@ const Edit = () => {
   }
 
   const addPublisher = async () => {
-    const model: PublisherModel = {
+    const model: IPublisher = {
       name: publisher
     }
     await pubSvc.add(model);

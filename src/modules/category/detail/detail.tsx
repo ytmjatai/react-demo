@@ -2,11 +2,11 @@ import React, { useState, useEffect, EffectCallback } from 'react';
 import { Form, Input } from 'antd';
 
 import * as cateSvc from '../../../services/category.service';
-import { CategoryModel } from '../../../models/category';
+import { ICategory } from '../../../models/category';
 
 const Detail = () => {
-  const [cate, setCate] = useState<CategoryModel>({});
-  const [pcate, setPcate] = useState<CategoryModel>({});
+  const [cate, setCate] = useState<ICategory>({});
+  const [pcate, setPcate] = useState<ICategory>({});
 
   useEffect(() => {
     cateSvc.getList();
@@ -18,7 +18,7 @@ const Detail = () => {
     }
   }, []);
 
-  const onCatesChange = async (cate: CategoryModel) => {
+  const onCatesChange = async (cate: ICategory) => {
     if (cate && cate.parentId) {
       const pcate = await cateSvc.getById(cate.parentId);
       setPcate(pcate);

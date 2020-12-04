@@ -1,11 +1,11 @@
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
-import { AuthorModel } from '../models/author';
+import { IAuthor } from '../models/author';
 import { Subject } from 'rxjs';
 
 const authors$ = new Subject();
 
-const getList = (): Promise<AuthorModel[]> => {
+const getList = (): Promise<IAuthor[]> => {
   const url = enviroment.apiUrl + '/author/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
@@ -19,7 +19,7 @@ const getList = (): Promise<AuthorModel[]> => {
   })
 }
 
-const getById = (id: number): Promise<AuthorModel> => {
+const getById = (id: number): Promise<IAuthor> => {
   const url = `${enviroment.apiUrl}/author/${id}/`;
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
@@ -32,7 +32,7 @@ const getById = (id: number): Promise<AuthorModel> => {
   })
 }
 
-const add = (model: AuthorModel): Promise<AuthorModel> => {
+const add = (model: IAuthor): Promise<IAuthor> => {
   const url = `${enviroment.apiUrl}/author/`;
   return new Promise((resolve, reject) => {
     axios.post(url, model).then((res: any) => {

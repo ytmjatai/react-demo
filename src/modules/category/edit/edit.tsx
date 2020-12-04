@@ -1,16 +1,15 @@
-import React, { useState, useEffect, EffectCallback, forwardRef, useImperativeHandle } from 'react';
-import { Form, TreeSelect, Input, Button, InputNumber } from 'antd';
+import React, { forwardRef, useImperativeHandle, useEffect, useState } from 'react';
+import { Form, TreeSelect, Input, InputNumber } from 'antd';
 import * as cateSvc from '../../../services/category.service';
-import { CategoryModel } from '../../../models/category';
-
+import { ICategory } from '../../../models/category';
+import { ICommomTreeData } from '../../../models/antd-tree';
 
 const Edit = forwardRef((props: PropsModel, eref) => {
 
-  const cates = cateSvc.getTreeData();
   const cate = cateSvc.cateSelect$.getValue();
   const action = cateSvc.action$.getValue();
-  const [form] = Form.useForm<CategoryModel>();
-
+  const [treeData, setTreeData] = useState<ICommomTreeData[]>([]);
+  const [form] = Form.useForm<ICategory>();
   switch (action) {
     case 'add':
       form.setFieldsValue({
@@ -24,49 +23,42 @@ const Edit = forwardRef((props: PropsModel, eref) => {
       break;
   }
 
-
   useImperativeHandle(eref, () => ({
     onSubmit: async () => {
       const valid = await form.validateFields();
-      if (!valid) {
-        return false;
-      }
+      if (!valid) { return false; }
       await doSubmit();
     }
-  }))
+  }));
+
+  useEffect(() => {
+    const action$ = cateSvc.action$.subscribe(action => onActionChange(action));
+    return () => {
+      action$.unsubscribe();
+    }
+  }, []);
+
+  const onActionChange = (action: 'add' | 'edit') => {
+    action === 'add' ? setTreeData(cateSvc.getTreeData()) :
+      setTreeData(cateSvc.getDisableTreeData());
+  }
 
   const doSubmit = async () => {
-    const model: CategoryModel = form.getFieldsValue();
+    const model: ICategory = form.getFieldsValue();
     switch (action) {
       case 'add':
-        const addRes = await cateSvc.add(model);
-        cateSvc.cateSelect$.next(addRes);
-        return;
+        return await cateSvc.add(model);
       case 'edit':
         model.id = cate.id;
-        const editRes = await cateSvc.edit(model);
-        cateSvc.cateSelect$.next(editRes);
-        return;
+        if (!model.parentId) {
+          model.parentId = null
+        }
+        const cateSelect = await cateSvc.edit(model);
+        cateSvc.cateSelect$.next(cateSelect);
       default:
         break;
     }
   }
-
-  // useEffect(() => {
-
-  //   const cate$ = cateSvc.cateSelect$.subscribe(cate => onCateChange(cate));
-  //   return () => {
-  //     cate$.unsubscribe();
-  //   }
-  // }, []);
-
-
-
-
-
-  // const onFinish = (form) => {
-
-  // }
 
   return (
     <Form colon labelAlign="right" labelCol={{ span: 4 }} form={form}>
@@ -77,7 +69,7 @@ const Edit = forwardRef((props: PropsModel, eref) => {
         <Input />
       </Form.Item>
       <Form.Item label="上级分类" name="parentId">
-        <TreeSelect treeData={cates} />
+        <TreeSelect treeData={treeData} allowClear />
       </Form.Item>
       <Form.Item label="排序" name="sequence">
         <InputNumber min={1} />

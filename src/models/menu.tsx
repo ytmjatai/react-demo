@@ -1,4 +1,4 @@
-export interface MenuModel {
+export interface IMenu {
   id?: number;
   title?: string;
   parentId?: number;

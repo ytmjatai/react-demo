@@ -1,8 +1,8 @@
 import enviroment from '../../config/environment';
 import axios from './axios-interceptor';
-import { PublisherModel } from '../models/publisher';
+import { IPublisher } from '../models/publisher';
 
-const getList = (): Promise<PublisherModel[]> => {
+const getList = (): Promise<IPublisher[]> => {
   const url = enviroment.apiUrl + '/publisher/'
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
@@ -15,7 +15,7 @@ const getList = (): Promise<PublisherModel[]> => {
   })
 }
 
-const getById = (id: number): Promise<PublisherModel> => {
+const getById = (id: number): Promise<IPublisher> => {
   const url = `${enviroment.apiUrl}/publisher/${id}/`;
   return new Promise((resolve, reject) => {
     axios.get(url).then((res: any) => {
@@ -28,7 +28,7 @@ const getById = (id: number): Promise<PublisherModel> => {
   })
 }
 
-const add = (model: PublisherModel): Promise<PublisherModel> => {
+const add = (model: IPublisher): Promise<IPublisher> => {
   const url = `${enviroment.apiUrl}/publisher/`;
   return new Promise((resolve, reject) => {
     axios.post(url, model).then((res: any) => {
