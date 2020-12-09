@@ -11,8 +11,9 @@ import './list.scss'
 import Edit from '../edit/edit';
 
 import { openAlert } from '../../../components/alert/alert';
-import { IAuthor } from '../../../models/author';
 import { ICommomTreeData } from '../../../models/antd-tree';
+
+import { Toast } from '../../../components/toast/toast';
 
 const List = () => {
   const editRef: MutableRefObject<EditModel> = useRef();
@@ -65,7 +66,7 @@ const List = () => {
     cateSvc.action$.next(action);
     const cate = cateSvc.cateSelect$.getValue();
     if ((action === 'edit') && (!cate || !cate.id)) {
-      openAlert({
+      Toast.open({
         message: '请选择要编辑的分类',
         type: 'warning'
       })
@@ -77,7 +78,7 @@ const List = () => {
   const onDelete = async () => {
     const cate = cateSvc.cateSelect$.getValue();
     if (!cate || !cate.id) {
-      openAlert({
+      Toast.open({
         message: '请选择要删除的分类',
         type: 'warning'
       })
