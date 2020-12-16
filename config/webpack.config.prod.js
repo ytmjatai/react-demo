@@ -33,7 +33,9 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      title: '图书管理系统',
+      template: 'index.html',
+      base: { href: '/library/' }
     })
   ],
 

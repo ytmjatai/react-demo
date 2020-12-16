@@ -14,11 +14,11 @@ class App extends React.Component {
     return (
       <>
         <ConfigProvider locale={zhCN}>
-          <Router>
+          <Router basename='library'>
             <Switch>
-              <Redirect exact path="/" to="/login" />
-              <Route path="/login" component={Login} />
-              <Route path="/home" component={Home} />
+              <Redirect exact path="/" to="/login/" />
+              <Route path="/login/" component={Login} />
+              <Route path="/home/" component={Home} />
             </Switch>
           </Router>
         </ConfigProvider>
